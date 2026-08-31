@@ -1,0 +1,268 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "naming_series:",
+ "creation": "2026-08-31 08:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "docket_id",
+  "cb_head",
+  "status",
+  "company",
+  "sb_route",
+  "from_warehouse",
+  "to_warehouse",
+  "cb_route",
+  "direction",
+  "project",
+  "site_label",
+  "sb_items",
+  "items",
+  "sb_sig",
+  "given_by",
+  "given_at",
+  "cb_sig",
+  "received_by",
+  "received_at",
+  "signature_mode",
+  "sb_post",
+  "stock_entry",
+  "captured_offline",
+  "synced_at",
+  "cb_post",
+  "post_error",
+  "notes"
+ ],
+ "fields": [
+  {
+   "default": "HND-.YYYY.-",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "HND-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "description": "Generated on the device before the docket is sent. Prevents the same handover posting twice.",
+   "fieldname": "docket_id",
+   "fieldtype": "Data",
+   "label": "Docket ID",
+   "reqd": 1,
+   "set_only_once": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "cb_head",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Open\nComplete\nPosted\nFailed\nCancelled",
+   "reqd": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_route",
+   "fieldtype": "Section Break",
+   "label": "Route"
+  },
+  {
+   "fieldname": "from_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "From",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "to_warehouse",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "To",
+   "options": "Warehouse",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cb_route",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Derived from the warehouse roles of each end. Not chosen by the user.",
+   "fieldname": "direction",
+   "fieldtype": "Select",
+   "label": "Direction",
+   "options": "\nStore to Van\nVan to Site\nSite to Van\nVan to Store\nOther",
+   "read_only": 1
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "site_label",
+   "fieldtype": "Data",
+   "label": "Site",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sb_items",
+   "fieldtype": "Section Break",
+   "label": "Items"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Stock Handover Docket Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sb_sig",
+   "fieldtype": "Section Break",
+   "label": "Signatures"
+  },
+  {
+   "fieldname": "given_by",
+   "fieldtype": "Link",
+   "label": "Given By",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "given_at",
+   "fieldtype": "Datetime",
+   "label": "Given At"
+  },
+  {
+   "fieldname": "cb_sig",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "received_by",
+   "fieldtype": "Link",
+   "label": "Received By",
+   "options": "User"
+  },
+  {
+   "fieldname": "received_at",
+   "fieldtype": "Datetime",
+   "label": "Received At"
+  },
+  {
+   "description": "Shared Device means the receiver signed on the giver's phone and was not logged in.",
+   "fieldname": "signature_mode",
+   "fieldtype": "Select",
+   "label": "Signature Mode",
+   "options": "\nShared Device\nOwn Device"
+  },
+  {
+   "fieldname": "sb_post",
+   "fieldtype": "Section Break",
+   "label": "Posting"
+  },
+  {
+   "fieldname": "stock_entry",
+   "fieldtype": "Link",
+   "label": "Stock Entry",
+   "options": "Stock Entry",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "captured_offline",
+   "fieldtype": "Check",
+   "label": "Captured Offline"
+  },
+  {
+   "fieldname": "synced_at",
+   "fieldtype": "Datetime",
+   "label": "Synced At",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb_post",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "post_error",
+   "fieldtype": "Small Text",
+   "label": "Posting Error",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-31 08:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Construction Handover",
+ "name": "Stock Handover Docket",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Site User",
+   "write": 1
+  }
+ ],
+ "search_fields": "docket_id,from_warehouse,to_warehouse,status",
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

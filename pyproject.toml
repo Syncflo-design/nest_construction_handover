@@ -1,0 +1,19 @@
+[project]
+name = "nest_construction_handover"
+authors = [{ name = "Syncflo", email = "ops@syncflo.co.za" }]
+description = "Two-signature stock handover dockets between main store, vans and site stores, built to work with no signal."
+requires-python = ">=3.10"
+readme = "README.md"
+dynamic = ["version"]
+dependencies = []
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.module]
+name = "nest_construction_handover"
+
+[tool.bench.frappe-dependencies]
+frappe = ">=16.0.0,<17.0.0"
+erpnext = ">=16.0.0,<17.0.0"
