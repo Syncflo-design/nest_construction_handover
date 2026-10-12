@@ -1,0 +1,840 @@
+/* Van & Site Stock: the main store, the vans and the sites on a phone.
+ *
+ * Sized for a gloved thumb on a phone held at arm's length: nothing under 15px, no target
+ * under 44px, visible focus, colour never carrying meaning on its own. Colours follow the
+ * nest_theme palette tokens; the var() fallbacks keep it right on a site without it.
+ * Only .ch- classes are styled, so nothing here leaks into the desk.
+ * Bump BUILD_MARKER in van_site_stock.js with every change here, or browsers keep the old file.
+ */
+
+.ch-root {
+	--ch-primary: var(--primary-color, #6b85a3);
+	--ch-strong: color-mix(in srgb, var(--ch-primary) 72%, #000);
+	--ch-tint: color-mix(in srgb, var(--ch-primary) 13%, transparent);
+	--ch-ink: var(--text-color, #1f2937);
+	--ch-muted: var(--text-muted, #5b6471);
+	--ch-line: var(--border-color, #d6dbe3);
+	--ch-bg: var(--card-bg, #ffffff);
+	--ch-sunken: var(--subtle-fg, #f1f4f8);
+	--ch-good: #15803d;
+	--ch-good-tint: rgba(21, 128, 61, 0.12);
+	--ch-bad: #b91c1c;
+
+	max-width: 640px;
+	margin: 0 auto;
+	/* Clears the sticky action bar and a phone's gesture bar. */
+	padding: 12px 12px calc(24px + env(safe-area-inset-bottom, 0px));
+	font-size: 16px;
+	line-height: 1.45;
+	color: var(--ch-ink);
+}
+
+[data-theme="dark"] .ch-root {
+	--ch-strong: color-mix(in srgb, var(--ch-primary) 85%, #000);
+	--ch-good: #4ade80;
+	--ch-good-tint: rgba(74, 222, 128, 0.14);
+	--ch-bad: #fca5a5;
+}
+
+.ch-root.ch-in-dialog {
+	padding: 0;
+	max-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ch-root *,
+	.ch-root *::before,
+	.ch-root *::after {
+		transition: none !important;
+		animation: none !important;
+	}
+}
+
+.ch-root *,
+.ch-root *::before,
+.ch-root *::after {
+	box-sizing: border-box;
+}
+
+.ch-root button,
+.ch-root select,
+.ch-root input {
+	font-family: inherit;
+	touch-action: manipulation;
+}
+
+.ch-root :focus-visible {
+	outline: 3px solid var(--ch-primary);
+	outline-offset: 2px;
+}
+
+.ch-root .ph {
+	line-height: 1;
+}
+
+/* ---- home --------------------------------------------------------------- */
+
+.ch-hero {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 16px 18px;
+	margin-bottom: 12px;
+	border-radius: 14px;
+	color: #fff;
+	background: linear-gradient(135deg, var(--ch-primary), var(--accent-color, #82a085));
+	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.ch-hero-mark {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	flex: 0 0 48px;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.18);
+	font-size: 28px;
+}
+
+.ch-hero-title {
+	font-size: 22px;
+	font-weight: 700;
+}
+
+.ch-hero-sub {
+	font-size: 14px;
+	opacity: 0.92;
+}
+
+.ch-menu {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 4px 0 12px;
+}
+
+.ch-tile {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	width: 100%;
+	text-align: left;
+	padding: 18px 14px;
+	color: var(--ch-ink);
+	background: var(--ch-bg);
+	border: 2px solid var(--ch-line);
+	border-radius: 14px;
+	cursor: pointer;
+	transition: border-color 150ms ease-out, background 150ms ease-out, transform 150ms ease-out;
+}
+
+.ch-tile:hover {
+	border-color: var(--ch-primary);
+}
+
+.ch-tile:active {
+	transform: scale(0.985);
+	background: var(--ch-tint);
+	border-color: var(--ch-primary);
+}
+
+.ch-tile-mark {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	flex: 0 0 48px;
+	border-radius: 12px;
+	background: var(--ch-tint);
+	color: var(--ch-strong);
+	font-size: 26px;
+}
+
+.ch-tile-text {
+	flex: 1;
+	min-width: 0;
+}
+
+.ch-tile-title {
+	display: block;
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.ch-tile-sub {
+	display: block;
+	margin-top: 2px;
+	font-size: 14px;
+	color: var(--ch-muted);
+}
+
+.ch-tile-go {
+	color: var(--ch-muted);
+	font-size: 20px;
+}
+
+.ch-links {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	margin-top: 16px;
+	padding-top: 12px;
+	border-top: 1px solid var(--ch-line);
+}
+
+.ch-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	min-height: 44px;
+	padding: 0 14px;
+	font-size: 15px;
+	color: var(--ch-muted);
+	background: transparent;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.ch-link:hover,
+.ch-link:focus-visible {
+	color: var(--ch-ink);
+	background: var(--ch-sunken);
+}
+
+/* ---- header ------------------------------------------------------------- */
+
+.ch-head {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 14px;
+}
+
+.ch-back {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	flex: 0 0 48px;
+	font-size: 22px;
+	color: var(--ch-ink);
+	background: var(--ch-bg);
+	border: 2px solid var(--ch-line);
+	border-radius: 12px;
+	cursor: pointer;
+}
+
+.ch-back:active {
+	background: var(--ch-sunken);
+	border-color: var(--ch-primary);
+}
+
+.ch-head-text {
+	min-width: 0;
+}
+
+.ch-title {
+	font-size: 21px;
+	font-weight: 700;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ch-sub {
+	font-size: 14px;
+	color: var(--ch-muted);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* ---- scan box ----------------------------------------------------------- */
+
+.ch-scan {
+	position: relative;
+	margin-bottom: 12px;
+}
+
+.ch-scan-mark {
+	position: absolute;
+	left: 14px;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 24px;
+	color: var(--ch-strong);
+	pointer-events: none;
+}
+
+.ch-input {
+	width: 100%;
+	min-height: 60px;
+	padding: 0 68px 0 50px;
+	font-size: 18px;
+	color: var(--ch-ink);
+	background: var(--ch-bg);
+	border: 2px solid var(--ch-primary);
+	border-radius: 12px;
+}
+
+.ch-input::placeholder {
+	color: var(--ch-muted);
+	font-size: 16px;
+}
+
+.ch-camera {
+	position: absolute;
+	right: 6px;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 52px;
+	height: 48px;
+	font-size: 24px;
+	color: #fff;
+	background: var(--ch-strong);
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.ch-camera:active {
+	transform: translateY(-50%) scale(0.96);
+}
+
+/* ---- lists -------------------------------------------------------------- */
+
+.ch-section {
+	margin: 16px 0 8px;
+	font-size: 12.5px;
+	font-weight: 700;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--ch-muted);
+}
+
+.ch-list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.ch-row {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	grid-template-areas: "main right" "sub right";
+	column-gap: 12px;
+	align-items: center;
+	width: 100%;
+	min-height: 60px;
+	padding: 10px 14px;
+	text-align: left;
+	color: var(--ch-ink);
+	background: var(--ch-bg);
+	border: 2px solid var(--ch-line);
+	border-radius: 12px;
+	cursor: pointer;
+	transition: border-color 150ms ease-out, background 150ms ease-out, transform 150ms ease-out;
+}
+
+.ch-row:not(:disabled):not(.ch-row-static):active {
+	transform: scale(0.99);
+	background: var(--ch-tint);
+	border-color: var(--ch-primary);
+}
+
+.ch-row:disabled,
+.ch-row-static {
+	cursor: default;
+	color: var(--ch-ink);
+	opacity: 1;
+}
+
+.ch-row-done {
+	opacity: 0.6 !important;
+}
+
+.ch-row-booked {
+	border-color: var(--ch-good);
+	background: var(--ch-good-tint);
+}
+
+.ch-row-static {
+	grid-template-columns: minmax(0, 1fr) auto 44px;
+	grid-template-areas: "main right x" "sub right x";
+	padding-right: 6px;
+}
+
+.ch-row-main {
+	grid-area: main;
+	font-size: 16.5px;
+	font-weight: 700;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ch-row-sub {
+	grid-area: sub;
+	font-size: 14px;
+	color: var(--ch-muted);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.ch-row-right {
+	grid-area: right;
+	text-align: right;
+	font-size: 15px;
+	font-weight: 700;
+	line-height: 1.35;
+	color: var(--ch-strong);
+	font-variant-numeric: tabular-nums;
+}
+
+.ch-remove {
+	grid-area: x;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	font-size: 20px;
+	color: var(--ch-muted);
+	background: transparent;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+.ch-remove:active {
+	color: var(--ch-bad);
+	background: var(--ch-sunken);
+}
+
+.ch-tag {
+	display: inline-block;
+	padding: 2px 8px;
+	font-size: 12px;
+	font-weight: 700;
+	color: var(--ch-strong);
+	background: var(--ch-tint);
+	border-radius: 999px;
+	white-space: nowrap;
+}
+
+.ch-tag-good {
+	color: var(--ch-good);
+	background: var(--ch-good-tint);
+}
+
+.ch-dim {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--ch-muted);
+}
+
+.ch-note {
+	padding: 14px 16px;
+	margin-bottom: 10px;
+	font-size: 15px;
+	color: var(--ch-muted);
+	background: var(--ch-sunken);
+	border-radius: 12px;
+}
+
+/* ---- cards -------------------------------------------------------------- */
+
+.ch-card {
+	padding: 14px 16px;
+	margin-bottom: 12px;
+	background: var(--ch-bg);
+	border: 2px solid var(--ch-line);
+	border-radius: 14px;
+}
+
+.ch-card-title {
+	font-size: 19px;
+	font-weight: 700;
+}
+
+.ch-fact {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 6px 0;
+	font-size: 15px;
+	border-bottom: 1px solid var(--ch-line);
+}
+
+.ch-fact:last-child {
+	border-bottom: none;
+}
+
+.ch-fact span {
+	color: var(--ch-muted);
+}
+
+.ch-fact b {
+	text-align: right;
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.ch-totals {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+	margin-top: 12px;
+}
+
+.ch-totals div {
+	padding: 10px 12px;
+	background: var(--ch-sunken);
+	border-radius: 10px;
+}
+
+.ch-totals b {
+	display: block;
+	font-size: 24px;
+	font-variant-numeric: tabular-nums;
+}
+
+.ch-totals span {
+	font-size: 13px;
+	color: var(--ch-muted);
+}
+
+/* ---- move / use --------------------------------------------------------- */
+
+.ch-toggle {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 6px;
+	padding: 4px;
+	margin-bottom: 12px;
+	background: var(--ch-sunken);
+	border-radius: 12px;
+}
+
+.ch-toggle button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	min-height: 48px;
+	font-size: 15px;
+	font-weight: 600;
+	color: var(--ch-muted);
+	background: transparent;
+	border: none;
+	border-radius: 9px;
+	cursor: pointer;
+}
+
+.ch-toggle button.active {
+	color: var(--ch-ink);
+	background: var(--ch-bg);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.ch-pair {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 12px;
+}
+
+.ch-label {
+	display: block;
+	margin-bottom: 12px;
+	font-size: 13.5px;
+	font-weight: 600;
+	color: var(--ch-muted);
+}
+
+.ch-pair .ch-label {
+	margin-bottom: 0;
+}
+
+.ch-select,
+.ch-text,
+.ch-fixed {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: 100%;
+	min-height: 52px;
+	margin-top: 4px;
+	padding: 0 12px;
+	font-size: 16px;
+	font-weight: 500;
+	color: var(--ch-ink);
+	background: var(--ch-bg);
+	border: 2px solid var(--ch-line);
+	border-radius: 10px;
+}
+
+.ch-fixed {
+	background: var(--ch-sunken);
+	border-color: transparent;
+}
+
+.ch-fixed .ph {
+	color: var(--ch-strong);
+	font-size: 18px;
+}
+
+/* ---- actions ------------------------------------------------------------ */
+
+/* Sticky, so a long list never pushes the button off the bottom of the screen. */
+.ch-actions {
+	position: sticky;
+	bottom: 0;
+	z-index: 5;
+	margin: 14px -12px 0;
+	padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+	background: var(--ch-bg);
+	border-top: 1px solid var(--ch-line);
+}
+
+.ch-actions-top {
+	position: static;
+	margin: 0 0 14px;
+	padding: 0;
+	border-top: none;
+	background: transparent;
+}
+
+.ch-submit,
+.ch-secondary {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	width: 100%;
+	border-radius: 14px;
+	cursor: pointer;
+}
+
+.ch-submit {
+	min-height: 60px;
+	font-size: 19px;
+	font-weight: 700;
+	color: #fff;
+	background: var(--ch-strong);
+	border: none;
+}
+
+.ch-submit:active {
+	transform: scale(0.99);
+}
+
+.ch-submit:disabled {
+	color: var(--ch-muted);
+	background: var(--ch-sunken);
+	cursor: default;
+	transform: none;
+}
+
+.ch-secondary {
+	min-height: 54px;
+	font-size: 16px;
+	font-weight: 600;
+	color: var(--ch-ink);
+	background: var(--ch-bg);
+	border: 2px solid var(--ch-line);
+}
+
+.ch-secondary:active {
+	background: var(--ch-sunken);
+}
+
+.ch-stack {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+/* ---- done --------------------------------------------------------------- */
+
+.ch-done {
+	padding: 32px 16px;
+	margin-bottom: 14px;
+	text-align: center;
+	background: var(--ch-good-tint);
+	border: 2px solid var(--ch-good);
+	border-radius: 14px;
+}
+
+.ch-tick {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 64px;
+	height: 64px;
+	font-size: 34px;
+	color: #fff;
+	background: var(--ch-good);
+	border-radius: 50%;
+}
+
+.ch-done-msg {
+	margin-top: 12px;
+	font-size: 21px;
+	font-weight: 700;
+	overflow-wrap: anywhere;
+}
+
+.ch-done-ref {
+	margin-top: 4px;
+	font-size: 14px;
+	color: var(--ch-muted);
+	overflow-wrap: anywhere;
+}
+
+/* ---- the quantity dialog (rendered inside a Frappe dialog) ---------------- */
+
+.ch-ask {
+	margin-bottom: 4px;
+}
+
+.ch-ask-name {
+	font-size: 17px;
+	font-weight: 700;
+}
+
+.ch-ask-info {
+	margin-top: 2px;
+	font-size: 14px;
+	color: var(--text-muted, #5b6471);
+}
+
+/* ---- handovers ---------------------------------------------------------- */
+
+.ch-root {
+	--ch-warn: #a16207;
+	--ch-warn-tint: rgba(161, 98, 7, 0.12);
+}
+
+[data-theme="dark"] .ch-root {
+	--ch-warn: #fcd34d;
+	--ch-warn-tint: rgba(252, 211, 77, 0.14);
+}
+
+.ch-hero-text {
+	min-width: 0;
+}
+
+.ch-hero-title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+/* Waiting to be accepted: the first thing on the home screen whenever there is any. */
+.ch-waiting {
+	padding: 12px;
+	margin-bottom: 12px;
+	background: var(--ch-tint);
+	border: 2px solid var(--ch-primary);
+	border-radius: 14px;
+}
+
+.ch-waiting-head {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 2px 2px 10px;
+	font-size: 17px;
+	font-weight: 700;
+	color: var(--ch-strong);
+}
+
+.ch-waiting-head .ph {
+	font-size: 22px;
+}
+
+.ch-waiting .ch-list {
+	margin-bottom: 0;
+}
+
+.ch-tag-go {
+	color: #fff;
+	background: var(--ch-strong);
+}
+
+.ch-tag-warn {
+	color: var(--ch-warn);
+	background: var(--ch-warn-tint);
+}
+
+.ch-hint {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 10px 12px;
+	margin: -2px 0 12px;
+	font-size: 14.5px;
+	color: var(--ch-ink);
+	background: var(--ch-sunken);
+	border-radius: 10px;
+}
+
+.ch-hint .ph {
+	margin-top: 2px;
+	font-size: 18px;
+	color: var(--ch-strong);
+}
+
+.ch-card-status {
+	margin-bottom: 6px;
+}
+
+.ch-notes {
+	margin-top: 10px;
+	padding-top: 10px;
+	font-size: 15px;
+	color: var(--ch-muted);
+	border-top: 1px solid var(--ch-line);
+	overflow-wrap: anywhere;
+}
+
+.ch-note-small {
+	padding: 10px 14px;
+	font-size: 14px;
+}
+
+.ch-root > .ch-secondary {
+	margin-bottom: 10px;
+}
+
+/* Turning a handover down is deliberate, so it does not look like the main button. */
+.ch-quiet {
+	color: var(--ch-bad);
+	background: transparent;
+	border-color: transparent;
+}
+
+.ch-quiet:active {
+	background: var(--ch-sunken);
+}
+
+.ch-submit .ph,
+.ch-secondary .ph {
+	font-size: 22px;
+}
+
+.ch-row-main .ph {
+	color: var(--ch-strong);
+}
