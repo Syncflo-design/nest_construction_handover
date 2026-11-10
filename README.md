@@ -73,6 +73,18 @@ Installing (and every migrate) adds these custom fields:
 
 Sites and their projects come from `nest_project_sites` (Project → Sites).
 
+## Phone app
+
+- **Installable:** `public/pwa/manifest.json` (Com-Struct name, CS icons) is linked on
+  desk and website pages, so Chrome on Android offers *Install app* / *Add to Home
+  screen* from its menu. It opens full screen at `/desk`. There is no service worker yet,
+  so this is install only, not offline.
+- **Phones open the field screen:** on a screen under 768px wide, a fresh desk load that
+  lands on the home page goes straight to the person's own screen (`mobile.py`): Van &
+  Site Stock for anyone with a store, van or site; the approval inbox for approvers; PO
+  Request for buyers. System Managers keep the home page. It happens once per load, so
+  Home still works afterwards and links to other pages are never redirected.
+
 ## Not yet
 
 Online only: each step records when the button is tapped. Offline capture and

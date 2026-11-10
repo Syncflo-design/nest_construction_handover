@@ -1,0 +1,31 @@
+{
+	"name": "Com-Struct",
+	"short_name": "Com-Struct",
+	"description": "Stock, purchasing and projects",
+	"id": "/desk",
+	"start_url": "/desk",
+	"scope": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#0021a5",
+	"icons": [
+		{
+			"src": "/assets/nest_construction_handover/pwa/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/assets/nest_construction_handover/pwa/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/assets/nest_construction_handover/pwa/icon-maskable-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
+}
